@@ -1,0 +1,52 @@
+.register-content{
+    padding-left: 20em;
+}
+
+.login-form > input{
+    margin-bottom: 0.5em;
+    width: 15em;
+    height: 2em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.login-form > button{
+    height: 2em;
+    background: chartreuse;
+    font-family: 'Courier New', Courier, monospace;
+    border: 0px;
+    color: aliceblue;
+    font-weight: 800;
+ 
+}
+
+p{
+    color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 20px;
+    color: aliceblue;
+
+}
+
+label{
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold;
+    color: aliceblue;
+}
+
+select{
+    margin-bottom: 10px;
+}
+
+.register-container{
+    padding-bottom: 5em;
+}
+
+.errors{
+    color: red;
+    font-family: 'Courier New', Courier, monospace;
+}
