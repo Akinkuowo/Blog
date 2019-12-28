@@ -3,22 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter, Route } from 'react-router-dom';
+
 import NavBar from './components/NavBar/NavBar';
 import HomePage from './components/Home/HomePage';
 import AboutPage from './components/About/AboutPage';
+import Footer from './components/Footer/footer';
+
 
 import * as serviceWorker from './serviceWorker';
-import 'tachyons';
+
+
+
 
 
 ReactDOM.render(
     
     <BrowserRouter>
         <div>
-            <NavBar  className="topbar topbar-inverse topbar-expand-md topbar-sticky"/>
+            <NavBar />
             <Route exact={true} path="/" component={App} />
             <Route path="/home" component={HomePage} />
             <Route path="/about" component={AboutPage} />
+      
+            <Footer />
         </div>
     </BrowserRouter>,document.getElementById('root'));
 
