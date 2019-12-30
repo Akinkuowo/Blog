@@ -13,6 +13,7 @@ import Footer from './components/Footer/footer';
 import CreateArticle from './components/CreateArticle/createArticle';
 import Login from './components/Login/login';
 import SignUp from './components/SignUp/signUp';
+import SingleArticle from './components/SingleArticle/singleArticle';
 
 
 
@@ -27,7 +28,8 @@ ReactDOM.render(
             <Route path="/article/create" component={CreateArticle} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
-
+            <Route path="/article/:slug" component={SingleArticle} />
+            
             <Footer />
         </div>
     </BrowserRouter>,document.getElementById('root'));
