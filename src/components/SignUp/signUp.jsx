@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {Link} from 'react-router-dom';
-import { validate } from 'indicative/validator';
+import { validateAll } from 'indicative/validator';
 
 class SignUp extends React.Component{
     constructor(){
@@ -11,7 +11,8 @@ class SignUp extends React.Component{
             name: '',
             email: '',
             password: '',
-            passwordComfirm: ''
+            password_confirmed: '',
+            errors: {}
         }
     }
 
@@ -41,7 +42,7 @@ class SignUp extends React.Component{
 
     handlePasswordComfirmChange = (event)=> {
         this.setState({
-            passwordComfirm: event.target.value
+            password_comfirmed: event.target.value
         })
     }
 
@@ -54,17 +55,34 @@ class SignUp extends React.Component{
         const rules = {
             name: 'required|string',
             email: 'required|email',
-            password: 'required|min:6|string'
+            password: 'required|min:6|string|confirmed'
         }
 
-        validate(data, rules)
+        const messages = {
+            required:  'this {{ field }} is required',
+            'name.string': 'name contains unallowed character',
+            'email.email': 'Please enter a valid email',
+            'password.min': 'password is too short',
+            'password.confirmed': 'The password does not match'
+
+        }
+
+        validateAll(data, rules, messages)
         .then(()=> {
             //register user
         })
         .catch(errors => {
-            console.log(errors)
+        
             // show errors to user
+            const errorMessages = {}
+
+            errors.forEach(error => errorMessages[error.field] = error.message)
+            this.setState({
+                errors: errorMessages
+            })
         })
+
+        
     }
     
     
@@ -78,18 +96,33 @@ class SignUp extends React.Component{
                 <form className="form-type-material" onSubmit={this.handleFormSubmit}>
                     <div className="form-group">
                         <input onChange={this.handleNameChange} name="name" type="text" className="form-control" placeholder="Username" />
+                        {
+                            this.state.errors['name'] &&
+                            <small className="text-danger">{this.state.errors['name']}</small>
+                      }
+                      
                     </div>
 
                     <div className="form-group">
                         <input onChange={this.handleEmailChange} name="email" type="text" className="form-control" placeholder="Email address" />
+                        {
+                            this.state.errors['email'] &&
+                            <small className="text-danger">{this.state.errors['email']}</small>
+                        }
+                        
                     </div>
 
                     <div className="form-group">
-                        <input onChange={this.handlePasswordChange} name="Password" type="password" className="form-control" placeholder="Password" />
+                        <input onChange={this.handlePasswordChange} name="password" type="password" className="form-control" placeholder="Password" />
+                        {
+                            this.state.errors['password'] &&
+                            <small className="text-danger">{this.state.errors['password']}</small>
+                        }
+                       
                     </div>
 
                     <div className="form-group">
-                        <input onChange={this.handlePasswordComfirmChange} name="confirm_password" type="password" className="form-control" placeholder="Password (confirm)" />
+                        <input onChange={this.handlePasswordComfirmChange} name="password_confirmed" type="password" className="form-control" placeholder="Password (confirm)" />
                     </div>
                     <br />
                     <button className="btn btn-bold btn-block btn-primary" type="submit">Register</button>
