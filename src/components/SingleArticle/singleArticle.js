@@ -18,7 +18,7 @@ const SingleArticle = ()=> {
                         <br />
                         <p>
                             <span className="opacity-70 mr-8">By</span>
-                            <a className="text-white" href="#">Hossein Shams</a>
+                            <a className="text-white" href="hossein">Hossein Shams</a>
                         </p>
                         <p>
                             <img className="rounded-circle w-40" src={`${process.env.PUBLIC_URL}/assets/img/avatar/2.jpg`} alt="..." />
@@ -107,10 +107,10 @@ const SingleArticle = ()=> {
                             "outside the box" thinking. Dramatically redefine out-of-the-box schemas.</p>
                 
                             <div className="gap-multiline-items-1 mt-30">
-                            <a className="badge badge-pill badge-default" href="#">Record</a>
-                            <a className="badge badge-pill badge-default" href="#">Progress</a>
-                            <a className="badge badge-pill badge-default" href="#">Customers</a>
-                            <a className="badge badge-pill badge-default" href="#">News</a>
+                            <a className="badge badge-pill badge-default" href="record">Record</a>
+                            <a className="badge badge-pill badge-default" href="progress">Progress</a>
+                            <a className="badge badge-pill badge-default" href="customer">Customers</a>
+                            <a className="badge badge-pill badge-default" href="news">News</a>
                             </div>
                         </div>
                     </div>

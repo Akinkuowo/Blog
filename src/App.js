@@ -33,7 +33,14 @@ const App = () => {
 						<Article />
 						<hr />
 						<Article />
-						<hr />
+						<nav className="flexbox mt-50 mb-50">
+							<a className="btn btn-white disabled">
+								<i className="ti-arrow-left fs-9 mr-4"></i> Newer</a>
+							<a className="btn btn-white" href="#">Older
+								<i className="ti-arrow-right fs-9 ml-4"></i>
+							</a>
+						</nav>
+
 					</div>
 				</div>
 			</main>

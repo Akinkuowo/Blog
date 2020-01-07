@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 
 
 import * as serviceWorker from './serviceWorker';
@@ -15,23 +15,36 @@ import Login from './components/Login/login';
 import SignUp from './components/SignUp/signUp';
 import SingleArticle from './components/SingleArticle/singleArticle';
 
+const Main = withRouter(({ location })=>{
 
-
-
-
-ReactDOM.render(
-    
-    <BrowserRouter>
+    return(
         <div>
-            <NavBar />
+            {
+                location.pathname !== '/login' && location.pathname !== '/signup' &&
+                <NavBar />
+            }
+            
             <Route exact={true} path="/" component={App} />
             <Route path="/article/create" component={CreateArticle} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route path="/article/:slug" component={SingleArticle} />
             
-            <Footer />
+            {
+                location.pathname !== '/login' && location.pathname !== '/signup' &&
+                <Footer />
+            }
+            
         </div>
+    );
+})
+
+
+
+ReactDOM.render(
+    
+    <BrowserRouter>
+      <Main />
     </BrowserRouter>,document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
