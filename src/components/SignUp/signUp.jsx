@@ -2,6 +2,9 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 import { validateAll } from 'indicative/validator';
+import axios from 'axios';
+
+import config from '../../config'
 
 class SignUp extends React.Component{
     constructor(){
@@ -11,7 +14,7 @@ class SignUp extends React.Component{
             name: '',
             email: '',
             password: '',
-            password_confirmed: '',
+            password_confirmation: '',
             errors: {}
         }
     }
@@ -40,15 +43,14 @@ class SignUp extends React.Component{
 
     }
 
-    handlePasswordComfirmChange = (event)=> {
+    handlePasswordConfirmChange = (event)=> {
         this.setState({
-            password_comfirmed: event.target.value
+            password_confirmation: event.target.value
         })
     }
 
     handleFormSubmit = (event) => {
         event.preventDefault()
-        console.log(this.state)
 
         //validating user data
         const data = this.state;
@@ -70,6 +72,27 @@ class SignUp extends React.Component{
         validateAll(data, rules, messages)
         .then(()=> {
             //register user
+            axios.post(`${config.ApiUrl}/signup`,  {
+                    name: this.state.name,
+                    email: this.state.email,
+                    password: this.state.password
+                
+            }).then(response => {
+
+                localStorage.setItem('user', JSON.stringify(response.data))
+                this.props.history.push('/')
+              
+            })
+            .catch(errors => {
+               
+
+                const formatedErrors = {}
+
+                formatedErrors['email'] = errors.response.data['email'][0]
+                this.setState({
+                    errors: formatedErrors
+                })
+            })
         })
         .catch(errors => {
         
@@ -122,7 +145,7 @@ class SignUp extends React.Component{
                     </div>
 
                     <div className="form-group">
-                        <input onChange={this.handlePasswordComfirmChange} name="password_confirmed" type="password" className="form-control" placeholder="Password (confirm)" />
+                        <input onChange={this.handlePasswordConfirmChange} name="password_confirmation" type="password" className="form-control" placeholder="Password (confirm)" />
                     </div>
                     <br />
                     <button className="btn btn-bold btn-block btn-primary" type="submit">Register</button>
