@@ -5,7 +5,7 @@ import Article from './components/Article/article';
 
 
 
-const App = () => {
+const App = ({ loadUser, name }) => {
 		return (
  		<div >
 			<header className="header header-inverse" style={{backgroundImage: 'url(assets/img/bg-gift.jpg)'}} data-overlay={8} >

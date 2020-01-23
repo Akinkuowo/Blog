@@ -78,14 +78,13 @@ class SignUp extends React.Component{
                     password: this.state.password
                 
             }).then(response => {
-
-                localStorage.setItem('user', JSON.stringify(response.data))
+                localStorage.setItem('user', JSON.stringify(response.data[0]))
+                this.props.setAuthUser(response.data[0])
                 this.props.history.push('/')
               
             })
             .catch(errors => {
                
-
                 const formatedErrors = {}
 
                 formatedErrors['email'] = errors.response.data['email'][0]

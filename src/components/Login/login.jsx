@@ -1,16 +1,18 @@
 import React from 'react';
+import { validateAll } from 'indicative/validator';
 import axios from 'axios';
 import config from '../../config'
 
 
-class Login extends React.component{
+class Login extends React.Component{
 
     constructor(){
         super()
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errors: {}
         }
     }
 
@@ -26,28 +28,68 @@ class Login extends React.component{
         })
     }
 
-    handleLogin = () => {
-        axios.post(`${config.ApiUrl}/login`,  {
-            email: this.state.email,
-            password: this.state.password
-        }).then(response => response.json())
-          .then(user => {
-              if(user.id){
-                localStorage.setItem('user', JSON.stringify(response.data))
-                this.props.history.push('/')
-              }
-          }) 
-          .catch(errors => {
+    handleLogin = (event) => {
+        event.preventDefault()
+
+        //validating user data
+        const data = this.state;
+        const rules = {
            
+            email: 'required|email',
+            password: 'required|string'
+        }
 
-            const formatedErrors = {}
+        const messages = {
+            required:  'this {{ field }} is required',
+            'email.email': 'Please enter a valid email',
+            'password.min': 'password is too short',
 
-            formatedErrors['email'] = errors.response.data['email'][0]
-            this.setState({
-                errors: formatedErrors
+        }
+
+        validateAll(data, rules, messages)
+        .then(()=> {
+            //login user
+            axios.post(`${config.ApiUrl}/login`,  {
+                    email: this.state.email,
+                    password: this.state.password
+                
+            }).then(user => {
+                localStorage.setItem('user', JSON.stringify(user.data))
+                this.props.setAuthUser(user.data)
+                this.props.history.push('/')
+            }).catch(errors => {
+                console.log(errors.response)
+                const formatedErrors = {}
+                
+                if(errors.response.data['Invalid']){
+                    formatedErrors['Invalid'] = errors.response.data['Invalid'][0]
+                }else if(errors.response.data['incorrectPassword']){
+                    formatedErrors['incorrectPassword'] = errors.response.data['incorrectPassword'][0]
+                }else{
+                    formatedErrors['userNotFound'] = errors.response.data['userNotFound'][0]
+                }
+                
+                
+                this.setState({
+                    errors: formatedErrors
+                })
             })
         })
+        .catch(errors => {
+        
+            console.log(errors)
+            // show errors to user
+            const errorMessages = {}
+
+            errors.forEach(error => errorMessages[error.field] = error.message)
+            this.setState({
+                errors: errorMessages
+            })
+        })
+
+        
     }
+        
 
 
     render(){
@@ -57,13 +99,30 @@ class Login extends React.component{
                     <h5 className="text-uppercase text-center">Login</h5>
                     <br /><br />
     
-                    <form>
+                    <form className="form-type-material" onSubmit={this.handleLogin}>
                         <div className="form-group">
-                            <input onChange={this.handleLoginEmail} type="text" name="name" className="form-control" placeholder="Email address" />
+                            <input onChange={this.handleLoginEmail} type="text" name="email" className="form-control" placeholder="Email address" />
+                            {
+                                this.state.errors['email'] &&
+                                <small className="text-danger">{this.state.errors['email']}</small>
+                            }
+                            {
+                                this.state.errors['Invalid'] &&
+                                <small className="text-danger">{this.state.errors['Invalid']}</small>
+                            }
                         </div>
                 
                         <div className="form-group">
                          <input onChange={this.handleLoginPassword} type="password" name="password" className="form-control" placeholder="Password" />
+                         {
+                            this.state.errors['password'] &&
+                            <small className="text-danger">{this.state.errors['password']}</small>
+                        }
+                        {
+                            this.state.errors['incorrectPassword'] &&
+                            <small className="text-danger">{this.state.errors['incorrectPassword']}</small>
+                        }
+
                         </div>
                 
                         <div className="form-group flexbox py-10">
@@ -77,7 +136,7 @@ class Login extends React.component{
                         </div>
                 
                         <div className="form-group">
-                            <button onClick={this.handleLogin} className="btn btn-bold btn-block btn-primary" type="submit">Login</button>
+                            <button  className="btn btn-bold btn-block btn-primary" type="submit">Login</button>
                         </div>
                     </form>
     
