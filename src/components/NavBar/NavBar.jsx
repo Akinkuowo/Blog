@@ -20,9 +20,14 @@ const NavBar = ({ authUser })=>{
                     <li className="nav-item">
                         <Link className="nav-link" to="/">Home</Link>
                     </li>
+                    
+                    {
+                    authUser &&
                     <li className="nav-item"> 
-                        <Link className="nav-link" to="/article/create">Write new article</Link>
+                        <Link className="nav-link" to="/create/article">Write new article</Link>
                     </li>
+                    }
+
                     <li className="nav-item">
                         <a className="nav-link" href="#">Hey {authUser && authUser.name}! 
                         <i className="fa fa-caret-down"></i>

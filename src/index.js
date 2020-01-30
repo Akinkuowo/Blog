@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 
 import NavBar from './components/NavBar/NavBar';
 
+import ArticleService from './Services/article'
 import Footer from './components/Footer/footer';
 import CreateArticle from './components/CreateArticle/createArticle';
 import Login from './components/Login/login';
@@ -29,7 +30,6 @@ class Content extends React.Component{
 
     componentDidMount(){
             const user = localStorage.getItem('user')
-            console.log(user)
 
             if(user){
                 this.setState({
@@ -56,10 +56,10 @@ class Content extends React.Component{
             }
              
             <Route exact={true} path="/" render={(props)=> <App {...props}  />} />
-            <Route path="/article/create" component={CreateArticle} />
+            <Route exact path="/create/article" render={(props)=> <CreateArticle {...props} getCategories={this.props.ArticleService.getCategories} createArticle={this.props.ArticleService.createArticle} />} />
             <Route path="/login" render={(props)=> <Login {...props} setAuthUser={this.setAuthUser} />}  />
             <Route path="/signup"  render={(props)=> <SignUp {...props} setAuthUser={this.setAuthUser} />} />
-            <Route path="/article/:slug" component={SingleArticle} />
+            <Route exact path="/article/:slug" component={SingleArticle} />
             
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
@@ -75,7 +75,11 @@ class Content extends React.Component{
 const Main = withRouter(( props)=>{
 
     return(
-        <Content { ...props} />
+        <Content 
+        
+        ArticleService={new ArticleService()}
+        { ...props} 
+        />
     );
 })
 
