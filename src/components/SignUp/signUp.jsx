@@ -121,7 +121,7 @@ class SignUp extends React.Component{
                         {
                             this.state.errors['name'] &&
                             <small className="text-danger">{this.state.errors['name']}</small>
-                      }
+                        }
                       
                     </div>
 

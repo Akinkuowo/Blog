@@ -55,8 +55,8 @@ class Content extends React.Component{
                 <NavBar  authUser={this.state.authUser}/>
             }
              
-            <Route exact={true} path="/" render={(props)=> <App {...props}  />} />
-            <Route exact path="/create/article" render={(props)=> <CreateArticle {...props} getCategories={this.props.ArticleService.getCategories} createArticle={this.props.ArticleService.createArticle} />} />
+            <Route exact path="/" render={(props)=> <App {...props} getArticles={this.props.ArticleService.getArticles} />}  />
+            <Route exact path="/create/article" render={(props)=> <CreateArticle {...props} getCategories={this.props.ArticleService.getCategories} createArticle={this.props.ArticleService.createArticle} authUser={this.state.authUser} />} />
             <Route path="/login" render={(props)=> <Login {...props} setAuthUser={this.setAuthUser} />}  />
             <Route path="/signup"  render={(props)=> <SignUp {...props} setAuthUser={this.setAuthUser} />} />
             <Route exact path="/article/:slug" component={SingleArticle} />
