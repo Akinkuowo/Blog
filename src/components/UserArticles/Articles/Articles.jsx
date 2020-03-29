@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Article from '../../components/Article/article';
+import Article from './Article/article';
+import Banner from './Banner/banner';
 
-import Banner from '../Banner/banner';
 
 import './articles.css'
 

@@ -14,7 +14,8 @@ class CreateArticle extends React.Component {
             category: null,
             Content: '',
             errors: [],
-            categories: []
+            categories: [],
+            author: ''
         }
     }
 
@@ -62,11 +63,13 @@ class CreateArticle extends React.Component {
         
     }
 
-  
+
     handleFormSubmit = async (event) => {
         event.preventDefault()
+        const { authUser } = this.props
 
-        console.log(this.state)          
+        // console.log(authUser.name)
+        // console.log(this.state)          
         const data = this.state;
         const rules = {
             image: 'required',
@@ -92,13 +95,13 @@ class CreateArticle extends React.Component {
             const formData = new FormData();
             formData.append('image', this.state.image);
 
-            const response =  axios.post('http://localhost:3100/upload', formData, {
+            const response =  axios.post('http://localhost:4000/upload', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             } ).then(response =>{
                 console.log(response)
-            })
+            }) 
         
-            fetch('http://localhost:3100/create/article', {
+            fetch('http://localhost:4000/create/article', {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -106,6 +109,7 @@ class CreateArticle extends React.Component {
                     title: this.state.title,
                     category: this.state.category,
                     Content: this.state.Content,
+                    author: authUser.name
                 })
                 
             }).then(response => {

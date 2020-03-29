@@ -15,6 +15,11 @@ import CreateArticle from './components/CreateArticle/createArticle';
 import Login from './components/Login/login';
 import SignUp from './components/SignUp/signUp';
 import SingleArticle from './components/SingleArticle/singleArticle';
+import Auth from './components/Auth/Auth';
+import LoginAuth from './components/LoginAuth/LoginAuth';
+import SignUpAuth from './components/SignUpAuth/SignUpAuth';
+import UserArticles from './components/UserArticles/UserArticles';
+import UserArticlesAuth from './components/UserArticlesAuth/UserArticlesAuth';
 
 
 class Content extends React.Component{
@@ -23,6 +28,9 @@ class Content extends React.Component{
 
         this.state = {
             authUser: null,
+            articles: [],
+            articleId: '',
+            author: ''
         }
     }
 
@@ -38,6 +46,11 @@ class Content extends React.Component{
             }
     }
 
+    removeAuthUser = () => {
+        localStorage.removeItem('user');
+
+        this.setState({ authUser: null})
+    }
    
     setAuthUser = (authUser) => {
         this.setState({
@@ -45,6 +58,15 @@ class Content extends React.Component{
         })
     }
 
+    setArticles = (articles) => {
+        this.setState({ articles })
+    }
+
+    getArticleId = (articleId) =>  {
+        this.setState({ articleId })
+    }
+
+   
     render(){
         const { location } = this.props
          return (
@@ -52,14 +74,41 @@ class Content extends React.Component{
             
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
-                <NavBar  authUser={this.state.authUser}/>
+                <NavBar removeAuthUser={this.removeAuthUser}  authUser={this.state.authUser}/>
+
+                
             }
              
-            <Route exact path="/" render={(props)=> <App {...props} getArticles={this.props.ArticleService.getArticles} />}  />
-            <Route exact path="/create/article" render={(props)=> <CreateArticle {...props} getCategories={this.props.ArticleService.getCategories} createArticle={this.props.ArticleService.createArticle} authUser={this.state.authUser} />} />
-            <Route path="/login" render={(props)=> <Login {...props} setAuthUser={this.setAuthUser} />}  />
-            <Route path="/signup"  render={(props)=> <SignUp {...props} setAuthUser={this.setAuthUser} />} />
-            <Route exact path="/article/:slug" component={SingleArticle} />
+            <Route exact path="/" render={(props)=> <App {...props} getArticles={this.props.ArticleService.getArticles} setArticles={this.setArticles} getArticleId={this.getArticleId}/>}  />
+
+            <Auth path="/create/article" component={CreateArticle} props={{ 
+                getCategories: this.props.ArticleService.getCategories, 
+                createArticle: this.props.ArticleService.createArticle,
+                authUser: this.state.authUser ? this.state.authUser : null }}
+                isAuthenticated={this.state.authUser !== null}
+            />
+
+            <UserArticlesAuth path="/user/articles" component={UserArticles} props={{ 
+                getUserArticles: this.props.ArticleService.getUserArticles,
+                setArticles: this.setArticles, 
+                getAuthor: this.state.author,
+                authUser: this.state.authUser ? this.state.authUser : null }}
+                isAuthenticated={this.state.authUser !== null}
+            />
+
+            <LoginAuth  path="/login" component={Login} props={{
+                setAuthUser: this.setAuthUser }}
+                isAuthenticated={this.state.authUser !== null}
+            />
+            {/* <Route path="/login" render={(props)=> <Login {...props} setAuthUser={this.setAuthUser} />}  /> */}
+            
+            <SignUpAuth path="/signup" component={SignUp} props={{
+                setAuthUser: this.setAuthUser }}
+                isAuthenticated={this.state.authUser !== null} />
+                
+            {/* <Route path="/signup"  render={(props)=> <SignUp {...props} setAuthUser={this.setAuthUser} />} /> */}
+            
+            <Route exact path="/article/:slug" render={(props)=> <SingleArticle {...props} getUserArticles={this.props.ArticleService.getUserArticles()} articleId={this.state.articleId} articles={this.state.articles} /> }  />
             
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&

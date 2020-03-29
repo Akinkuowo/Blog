@@ -1,11 +1,11 @@
 import React from 'react';
-import './app.css';
-import Articles from './components/Articles/Articles';
+import './userArticles.css';
+import Articles from './Articles/Articles';
 
 
 
 
-class App extends React.Component{
+class UserArticles extends React.Component{
 	constructor(){
 		super()
 
@@ -17,13 +17,13 @@ class App extends React.Component{
 	}
 
 	async componentWillMount(){
-		const articles = await this.props.getArticles();
+		const articles = await this.props.getUserArticles();
 		
 		
 		this.setState({ articles })
 		
-		this.props.setArticles(articles)
-		localStorage.setItem('articles', JSON.stringify(this.state.articles))
+		this.props.getUserArticles(articles)
+		// localStorage.setItem('articles', JSON.stringify(this.state.articles))
 	}
 
 	handleShowMore = () => {
@@ -53,4 +53,4 @@ class App extends React.Component{
 }
 
 
-export default App;
+export default UserArticles;
