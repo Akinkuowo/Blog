@@ -43,7 +43,7 @@ const NavBar = ({ authUser, removeAuthUser })=>{
                         <i className="fa fa-caret-down"></i>
                         </a>
                         <div className="nav-submenu">
-                        {/* <Link onClick={handleUserArticles} to="/user/articles" >My articles</Link> */}
+                       
                         <Link onClick={removeAuthUser} className="nav-link" to="/">Logout</Link>
                         </div>
                     </li>

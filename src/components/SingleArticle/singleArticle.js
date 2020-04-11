@@ -17,9 +17,9 @@ class SingleArticleContainer extends React.Component {
 
     }
 
-    componentWillMount(){
-        const articleId = this.props.articleId;
-        const  article = this.props.articles.find(article => article.id === articleId);
+     async componentWillMount(){
+        let  article = await this.props.articles.find(article => article.slug === this.props.match.params.slug );
+    
         
         if(article){
             this.setState({
@@ -27,17 +27,18 @@ class SingleArticleContainer extends React.Component {
                 loading: false
             })
         
-        }else if(!article){
-            const articleId = localStorage.getItem('articleId')
-            const article = localStorage.getItem('articles');
-            
-            // const newArticle = article.find(article => article.id === articleId);
-            // console.log(newArticle);
+        }else{
+             article = await this.props.getArticles(this.props.match.params.slug);
+             
+           const currentArticle =  article.find(article => article.slug === this.props.match.params.slug)
 
-            // this.setState({
-            //     singleArticle: article,
-            //     loading: false
-            // })
+           console.log(currentArticle)
+
+
+            this.setState({
+                singleArticle: currentArticle,
+                loading: false
+            })
         }
 
 

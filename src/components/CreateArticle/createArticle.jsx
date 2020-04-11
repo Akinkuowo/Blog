@@ -1,5 +1,7 @@
 import React from 'react';
 import CreateArticleForm from './CreateArticleForm/CreateArticleForm';
+// import { editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { validateAll } from 'indicative/validator';
 import  config from '../../config/index';
 import axios from 'axios';
@@ -113,6 +115,7 @@ class CreateArticle extends React.Component {
                 })
                 
             }).then(response => {
+                this.props.NotificationService.success('Article created Succsesfully')
                 this.props.history.push('/')
             })
             
@@ -120,6 +123,7 @@ class CreateArticle extends React.Component {
             const errorMessages = []
 
             error.forEach(error => errorMessages[error.field] = error.message)
+            this.props.NotificationService.error('Something went wrong')
             this.setState({
                     errors: errorMessages
                 })

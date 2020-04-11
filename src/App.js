@@ -34,10 +34,7 @@ class App extends React.Component{
 		})
 	  }
 
-	  articleId = (articleId) => {
-		  this.setState({ articleId })
-		  this.props.getArticleId(articleId)
-	  }
+
 
 
 

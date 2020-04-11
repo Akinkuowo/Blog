@@ -1,5 +1,6 @@
 import React from 'react';
-
+// import { Editor } from 'react-draft-wysiwyg';
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 
 const CreateArticleForm = ({ handleFormSubmit, handleImageChange, handleTitleChange, handleContentChange, handleCategoryChange, categories, errors })=> {
@@ -57,7 +58,16 @@ const CreateArticleForm = ({ handleFormSubmit, handleImageChange, handleTitleCha
 
 
                         <div className="form-group">
-                            <textarea onChange={handleContentChange} name="Content" className="form-control form-control-lg" rows="4" placeholder="Content" ></textarea>
+                            <textarea 
+                             onChange={handleContentChange}
+                             name="Content" 
+                             className="form-control form-control-lg" 
+                             rows="4" 
+                             placeholder="Content" >
+
+                             </textarea>
+
+                             {/* <Editor /> */}
 
                             {
                                 errors['content'] &&

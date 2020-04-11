@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { validateAll } from 'indicative/validator';
 import axios from 'axios';
 import config from '../../config'
@@ -56,9 +57,11 @@ class Login extends React.Component{
             }).then(user => {
                 localStorage.setItem('user', JSON.stringify(user.data))
                 this.props.setAuthUser(user.data)
+                this.props.NotificationService.success('successfully logged in')
                 this.props.history.push('/')
             }).catch(errors => {
                 console.log(errors.response)
+                this.props.NotificationService.error('invalid username or password')
                 const formatedErrors = {}
                 
                 if(errors.response.data['Invalid']){
@@ -82,6 +85,7 @@ class Login extends React.Component{
             const errorMessages = {}
 
             errors.forEach(error => errorMessages[error.field] = error.message)
+            this.props.NotificationService.error('Something went Wrong')
             this.setState({
                 errors: errorMessages
             })
@@ -138,6 +142,11 @@ class Login extends React.Component{
                         <div className="form-group">
                             <button  className="btn btn-bold btn-block btn-primary" type="submit">Login</button>
                         </div>
+
+                        <hr className="w-30" />
+                        <p className="text-center text-muted fs-13 mt-20">Don't have an account?
+                            <Link to="/signup">Sign Up</Link>
+                        </p>
                     </form>
     
                 </div>

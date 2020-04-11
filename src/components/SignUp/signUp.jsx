@@ -80,13 +80,13 @@ class SignUp extends React.Component{
             }).then(response => {
                 localStorage.setItem('user', JSON.stringify(response.data[0]))
                 this.props.setAuthUser(response.data[0])
+                this.props.NotificationService.success('Registration was successful')
                 this.props.history.push('/')
               
             })
             .catch(errors => {
                
                 const formatedErrors = {}
-
                 formatedErrors['email'] = errors.response.data['email'][0]
                 this.setState({
                     errors: formatedErrors
@@ -99,6 +99,7 @@ class SignUp extends React.Component{
             const errorMessages = {}
 
             errors.forEach(error => errorMessages[error.field] = error.message)
+            this.props.NotificationService.error('something went wrong')
             this.setState({
                 errors: errorMessages
             })

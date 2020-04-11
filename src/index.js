@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import NavBar from './components/NavBar/NavBar';
 
 import ArticleService from './Services/article'
+import NotificationService from './Services/notification';
 import Footer from './components/Footer/footer';
 import CreateArticle from './components/CreateArticle/createArticle';
 import Login from './components/Login/login';
@@ -48,6 +49,7 @@ class Content extends React.Component{
 
     removeAuthUser = () => {
         localStorage.removeItem('user');
+       this.props.NotificationService.success('logged out successfully!')
 
         this.setState({ authUser: null})
     }
@@ -62,10 +64,6 @@ class Content extends React.Component{
         this.setState({ articles })
     }
 
-    getArticleId = (articleId) =>  {
-        this.setState({ articleId })
-    }
-
    
     render(){
         const { location } = this.props
@@ -74,15 +72,16 @@ class Content extends React.Component{
             
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
-                <NavBar removeAuthUser={this.removeAuthUser}  authUser={this.state.authUser}/>
+                <NavBar  removeAuthUser={this.removeAuthUser}  authUser={this.state.authUser}/>
 
                 
             }
              
-            <Route exact path="/" render={(props)=> <App {...props} getArticles={this.props.ArticleService.getArticles} setArticles={this.setArticles} getArticleId={this.getArticleId}/>}  />
+            <Route exact path="/" render={(props)=> <App {...props} getArticles={this.props.ArticleService.getArticles} NotificationService={this.props.NotificationService} setArticles={this.setArticles} getArticleId={this.getArticleId}/>}  />
 
             <Auth path="/create/article" component={CreateArticle} props={{ 
                 getCategories: this.props.ArticleService.getCategories, 
+                NotificationService: this.props.NotificationService,
                 createArticle: this.props.ArticleService.createArticle,
                 authUser: this.state.authUser ? this.state.authUser : null }}
                 isAuthenticated={this.state.authUser !== null}
@@ -97,18 +96,20 @@ class Content extends React.Component{
             />
 
             <LoginAuth  path="/login" component={Login} props={{
+                NotificationService: this.props.NotificationService,
                 setAuthUser: this.setAuthUser }}
                 isAuthenticated={this.state.authUser !== null}
             />
             {/* <Route path="/login" render={(props)=> <Login {...props} setAuthUser={this.setAuthUser} />}  /> */}
             
             <SignUpAuth path="/signup" component={SignUp} props={{
-                setAuthUser: this.setAuthUser }}
+               NotificationService: this.props.NotificationService,
+               setAuthUser: this.setAuthUser }}
                 isAuthenticated={this.state.authUser !== null} />
                 
             {/* <Route path="/signup"  render={(props)=> <SignUp {...props} setAuthUser={this.setAuthUser} />} /> */}
             
-            <Route exact path="/article/:slug" render={(props)=> <SingleArticle {...props} getUserArticles={this.props.ArticleService.getUserArticles()} articleId={this.state.articleId} articles={this.state.articles} /> }  />
+            <Route exact path="/article/:slug" render={(props)=> <SingleArticle {...props} getUserArticles={this.props.ArticleService.getUserArticles()} getArticles={this.props.ArticleService.getArticles} articles={this.state.articles} /> }  />
             
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
@@ -127,6 +128,7 @@ const Main = withRouter(( props)=>{
         <Content 
         
         ArticleService={new ArticleService()}
+        NotificationService={new NotificationService()}
         { ...props} 
         />
     );
