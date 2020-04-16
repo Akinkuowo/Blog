@@ -1,0 +1,11 @@
+#editor-js{
+    border: 2px solid #e8e8e8;
+    border-radius: 2px;
+    color: #b5b9bf;
+}
+
+.ce-toolbar__content {
+    max-width: 750px;
+    margin: 0 auto;
+    position: relative;
+}

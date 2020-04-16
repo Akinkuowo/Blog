@@ -1,7 +1,8 @@
 import React from 'react';
 import CreateArticleForm from './CreateArticleForm/CreateArticleForm';
-// import { editor } from 'react-draft-wysiwyg';
+import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
 import { validateAll } from 'indicative/validator';
 import  config from '../../config/index';
 import axios from 'axios';
@@ -14,7 +15,7 @@ class CreateArticle extends React.Component {
             image: null,
             title: '',
             category: null,
-            Content: '',
+            Content: EditorState.createEmpty(),
             errors: [],
             categories: [],
             author: ''
@@ -65,13 +66,20 @@ class CreateArticle extends React.Component {
         
     }
 
+    handleEditorState = (editorState) => {
+        this.setState({
+            Content: editorState
+        })
+    }
+
 
     handleFormSubmit = async (event) => {
         event.preventDefault()
-        const { authUser } = this.props
+        const HTML = convertToRaw(this.state.Content.getCurrentContent());
+        console.log(draftToHtml(HTML))
 
-        // console.log(authUser.name)
-        // console.log(this.state)          
+        const { authUser } = this.props
+      
         const data = this.state;
         const rules = {
             image: 'required',
@@ -110,7 +118,7 @@ class CreateArticle extends React.Component {
                     image: this.state.image.name,
                     title: this.state.title,
                     category: this.state.category,
-                    Content: this.state.Content,
+                    Content: draftToHtml(HTML),
                     author: authUser.name
                 })
                 
@@ -139,10 +147,12 @@ class CreateArticle extends React.Component {
                 handleImageUpload={this.handleImageUpload}
                 handleImageChange={this.handleImageChange} 
                 handleCategoryChange={this.handleCategoryChange} 
-                handleContentChange={this.handleContentChange} 
+                // handleContentChange={this.handleContentChange} 
+                content={this.state.Content}
                 handleTitleChange={this.handleTitleChange} 
                 categories={this.state.categories}
                 errors={this.state.errors}
+                handleEditorState={this.handleEditorState}
             />
         )
     }

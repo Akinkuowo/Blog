@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-
+import renderHtml from 'react-render-html'
 
 
 const SingleArticle = ({ singleArticle })=> {
@@ -54,7 +54,7 @@ const SingleArticle = ({ singleArticle })=> {
                     <div className="row">
                          <div className="col-12 col-lg-8 offset-lg-2">       
                             <p className="lead">
-                                {singleArticle.content}
+                                {renderHtml(singleArticle.content)}
                             </p>
                         </div>
                            

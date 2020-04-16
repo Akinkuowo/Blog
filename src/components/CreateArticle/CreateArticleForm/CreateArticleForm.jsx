@@ -1,10 +1,18 @@
 import React from 'react';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import EditorJs from 'react-editor-js';
+// import Header from '@editorjs/header';
+// import List from '@editorjs/list';
+// import { EDITOR_JS_TOOLS } from "./constants";
+// import './CreateArticleForm.css'
 
 
-const CreateArticleForm = ({ handleFormSubmit, handleImageChange, handleTitleChange, handleContentChange, handleCategoryChange, categories, errors })=> {
+
+const CreateArticleForm = ({ handleFormSubmit, handleEditorState, handleImageChange, handleTitleChange, content, handleCategoryChange, categories, errors })=> {
     
+
+
     return(
        <div>
             <header className="header header-inverse bg-fixed" style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/img/bg-laptop.jpg)`}} data-overlay={8}>
@@ -58,16 +66,20 @@ const CreateArticleForm = ({ handleFormSubmit, handleImageChange, handleTitleCha
 
 
                         <div className="form-group">
-                            <textarea 
+                            {/* <textarea 
                              onChange={handleContentChange}
                              name="Content" 
                              className="form-control form-control-lg" 
                              rows="4" 
                              placeholder="Content" >
 
-                             </textarea>
+                             </textarea> */}
 
-                             {/* <Editor /> */}
+                             <Editor 
+
+                                editorState={content}
+                                onEditorStateChange={handleEditorState}
+                             />
 
                             {
                                 errors['content'] &&

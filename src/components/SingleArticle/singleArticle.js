@@ -32,8 +32,6 @@ class SingleArticleContainer extends React.Component {
              
            const currentArticle =  article.find(article => article.slug === this.props.match.params.slug)
 
-           console.log(currentArticle)
-
 
             this.setState({
                 singleArticle: currentArticle,
