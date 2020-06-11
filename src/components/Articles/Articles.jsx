@@ -38,7 +38,7 @@ class Articles extends React.Component {
 						 {
 						 articles && articles.slice(0, showArticles).map(article => (
 							<div key={article.id}>
-								<Article getArticleId={this.getArticleId} article={article} />
+								<Article  article={article} />
 								<hr />
 							</div>))
 						}

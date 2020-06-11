@@ -14,6 +14,15 @@ export default class  ArticleService {
      
     }
 
+    // async getComments () {
+
+    //     const response = await axios.get(`${config.ApiUrl}/comments`)
+
+    
+    //     return response.data;
+     
+    // }
+
     async getUserArticles () {
         const response = await axios.get(`${config.ApiUrl}/user/articles`)
 

@@ -105,13 +105,13 @@ class CreateArticle extends React.Component {
             const formData = new FormData();
             formData.append('image', this.state.image);
 
-            const response =  axios.post('http://localhost:4000/upload', formData, {
+            const response =  axios.post('https://quiet-sierra-90638.herokuapp.com//upload', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             } ).then(response =>{
                 console.log(response)
             }) 
         
-            fetch('http://localhost:4000/create/article', {
+            fetch('https://quiet-sierra-90638.herokuapp.com//create/article', {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

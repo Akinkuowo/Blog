@@ -5,3 +5,12 @@
 	margin: 30px auto;
 	margin-top: 50px;
 }
+
+.comment-container{
+	width: 1200px;
+	max-width: 1200px;
+}
+
+.comment-header{
+	padding-left: 35px;
+}

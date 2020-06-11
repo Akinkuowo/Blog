@@ -61,6 +61,7 @@ const NavBar = ({ authUser, removeAuthUser })=>{
                             <Link className="nav-link" to="/signup">SignUp</Link>
                         </li>
                     }
+
                    
                    
                     </ul>

@@ -31,7 +31,8 @@ class Content extends React.Component{
             authUser: null,
             articles: [],
             articleId: '',
-            author: ''
+            author: '',
+            comments: ''
         }
     }
 
@@ -62,6 +63,12 @@ class Content extends React.Component{
 
     setArticles = (articles) => {
         this.setState({ articles })
+    }
+
+    setComments = (comments) => {
+        this.setState({ comments })
+
+        
     }
 
    
@@ -109,12 +116,22 @@ class Content extends React.Component{
                 
             {/* <Route path="/signup"  render={(props)=> <SignUp {...props} setAuthUser={this.setAuthUser} />} /> */}
             
-            <Route exact path="/article/:slug" render={(props)=> <SingleArticle {...props} getUserArticles={this.props.ArticleService.getUserArticles()} getArticles={this.props.ArticleService.getArticles} articles={this.state.articles} /> }  />
+            <Route exact path="/article/:slug" render={(props)=> <SingleArticle {...props} 
+            getUserArticles={this.props.ArticleService.getUserArticles()} 
+            getComments={this.props.ArticleService.getComments} 
+            authUser={this.state.authUser}
+            setComments={this.setComments}
+            comments={this.state.comments}
+            getArticles={this.props.ArticleService.getArticles} 
+            articles={this.state.articles} /> }  />
             
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
                 <Footer />
+               
+
             }
+           
             
         </div>
             

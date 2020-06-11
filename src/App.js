@@ -18,7 +18,7 @@ class App extends React.Component{
 
 	async componentWillMount(){
 		const articles = await this.props.getArticles();
-		
+		 console.log(articles)
 		
 		this.setState({ articles })
 		

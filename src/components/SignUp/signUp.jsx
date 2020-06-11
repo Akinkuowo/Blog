@@ -87,10 +87,11 @@ class SignUp extends React.Component{
             .catch(errors => {
                
                 const formatedErrors = {}
-                formatedErrors['email'] = errors.response.data['email'][0]
-                this.setState({
-                    errors: formatedErrors
-                })
+                // formatedErrors['email'] = errors.response.data['email'][0]
+                // this.setState({
+                //     errors: formatedErrors
+                // })
+                console.log(errors.response)
             })
         })
         .catch(errors => {
