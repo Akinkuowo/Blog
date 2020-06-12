@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "bulma": "^0.8.0",
-    "draft-js": "^0.11.5",
+    "bootstrap": "^4.5.0",
+    "bulma": "^0.8.2",
+    "draft-js": "^0.11.6",
     "draft.js": "^0.2.0",
     "draftjs-to-html": "^0.9.1",
     "express-fileupload": "^1.1.6",
     "indicative": "^7.4.4",
     "noty": "^3.2.0-beta",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-draft-wysiwyg": "^1.14.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-draft-wysiwyg": "^1.14.5",
     "react-redux": "^7.0.3",
     "react-render-html": "^0.6.0",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
@@ -45,7 +45,7 @@
     ]
   },
   "devDependencies": {
-    "react-editor-js": "^1.5.0",
-    "tachyons": "^4.10.0"
+    "react-editor-js": "^1.6.2",
+    "tachyons": "^4.12.0"
   }
 }
