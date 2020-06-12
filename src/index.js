@@ -21,6 +21,7 @@ import LoginAuth from './components/LoginAuth/LoginAuth';
 import SignUpAuth from './components/SignUpAuth/SignUpAuth';
 import UserArticles from './components/UserArticles/UserArticles';
 import UserArticlesAuth from './components/UserArticlesAuth/UserArticlesAuth';
+import Categoties from './components/Categories/Categories';
 
 
 class Content extends React.Component{
@@ -94,6 +95,8 @@ class Content extends React.Component{
                 isAuthenticated={this.state.authUser !== null}
             />
 
+            <Route path="/add/Categories/"  component={Categoties} />     
+
             <UserArticlesAuth path="/user/articles" component={UserArticles} props={{ 
                 getUserArticles: this.props.ArticleService.getUserArticles,
                 setArticles: this.setArticles, 
@@ -131,8 +134,8 @@ class Content extends React.Component{
                
 
             }
-           
-            
+
+               
         </div>
             
         )
