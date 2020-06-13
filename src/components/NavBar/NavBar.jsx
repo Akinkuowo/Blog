@@ -45,6 +45,8 @@ const NavBar = ({ authUser, removeAuthUser })=>{
                         <div className="nav-submenu">
                        
                         <Link onClick={removeAuthUser} className="nav-link" to="/">Logout</Link>
+                            <Link className="nav-link" to="/add/categories">Add </Link>
+                        </li>
                         </div>
                     </li>
                     }
